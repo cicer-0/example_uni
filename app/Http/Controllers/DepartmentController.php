@@ -10,7 +10,14 @@ class DepartmentController extends Controller
 {
     public function index(Request $request)
     {
-        $departments = Department::paginate($request->input('size', 10));
+        $page = $request->input('page', 1);
+        $perPage = $request->input('per_page', 25);
+
+        if ($perPage === 'all')
+            $departments = Department::all();
+        else
+            $departments = Department::paginate($perPage, ['*'], 'page', $page);
+
         return response()->json($departments);
     }
 

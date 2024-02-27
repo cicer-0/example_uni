@@ -10,7 +10,14 @@ class UniversityController extends Controller
 {
     public function index(Request $request)
     {
-        $universities = University::paginate($request->input('size', 10));
+        $page = $request->input('page', 1);
+        $perPage = $request->input('per_page', 25);
+
+        if ($perPage === 'all')
+            $universities = University::all();
+        else
+            $universities = University::paginate($perPage, ['*'], 'page', $page);
+
         return response()->json($universities);
     }
 

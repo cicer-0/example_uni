@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UniversityViewController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Rutas para University
+Route::resource('universities', UniversityViewController::class)->except(['destroy', 'update', 'store','create','show','edit']);

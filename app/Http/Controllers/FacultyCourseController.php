@@ -10,7 +10,15 @@ class FacultyCourseController extends Controller
 {
     public function index(Request $request)
     {
-        $facultyCourses = FacultyCourse::paginate($request->input('size', 10));
+        $page = $request->input('page', 1);
+        $perPage = $request->input('per_page', 25);
+
+        if ($perPage === 'all')
+            $facultyCourses = FacultyCourse::all();
+        else
+            $facultyCourses = FacultyCourse::paginate($perPage, ['*'], 'page', $page);
+
+
         return response()->json($facultyCourses);
     }
 
